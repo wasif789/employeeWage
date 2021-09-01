@@ -8,11 +8,12 @@ namespace empWage
         public const int part_time = 1;
         public const int full_time = 2;
         public const int num_working_days = 20;
+        public const int maxworkinghour = 100;
         static void Main(string[] args)
         {
-            int empHrs;
-            int empWage, totalEmployeeWage = 0;
-            for (int day = 0; day < num_working_days; day++)
+            int empHrs, totalEmpHours = 0;
+            int empWage, totalEmployeeWage = 0, totalWorkingdays = 0;
+            for (int day = 0; totalEmpHours<=maxworkinghour && totalWorkingdays<num_working_days;day++)
             {
                 Random random = new Random();
                 int empCheck = random.Next(0, 3);
@@ -28,10 +29,10 @@ namespace empWage
                         empHrs = 0;
                         break;
                 }
-                empWage = empWage_perhour * empHrs;
-                totalEmployeeWage = totalEmployeeWage + empWage;
-                Console.WriteLine("employee wage:" + empWage);
+                totalEmpHours += empHrs;
+                Console.WriteLine("days:" + totalWorkingdays + "employee hours:" + empHrs);
             }
+            totalEmployeeWage = totalEmpHours * empWage_perhour;
             Console.WriteLine("total employee wage:" + totalEmployeeWage);
         }
     }
