@@ -4,26 +4,27 @@ namespace empWage
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            int partTime = 1;
-            int fullTime = 2;
             int empWage_perhour = 20;
-            int empHrs = 0;
-            int empWage = 0;
+            int part_time = 1;
+            int full_time = 2;
+            int empHrs;
+            int empWage;
             Random random = new Random();
             int empCheck = random.Next(0, 3);
-            if(empCheck==partTime)
+            switch(empCheck)
             {
-                empHrs = 4;
-            }
-            else if(empCheck==fullTime)
-            {
-                empHrs = 8;
-            }
-            else
-            {
-                empHrs = 0;
+                case part_time:
+                    empHrs= 4;
+                    break;
+                case full_time:
+                    empHrs = 8;
+                    break;
+                default:
+                    empHrs = 0;
+                    break;
             }
             empWage = empWage_perhour * empHrs;
             Console.WriteLine("employee wage:" + empWage);
