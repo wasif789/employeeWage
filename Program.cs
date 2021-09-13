@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace empWage
 {
@@ -9,27 +10,31 @@ namespace empWage
         public const int ABSENT = 0;
         public const int PART_TIME = 2;
 
-        private int noOfCompanies = 0;
-        private CompanyEmpWage[] CompanyEmpArray;
 
+        //Array List for Company Employee wage object array
+
+        private ArrayList CompanyEmpList;
+        //Constructor of initializing Array list 
         public EmployeeWage()
         {
-            this.CompanyEmpArray = new CompanyEmpWage[5];
+            this.CompanyEmpList = new ArrayList();
         }
 
         public void AddWage(string comp, int wagePerHour, int workingDaysPerMonth, int maxWorkingHours)
         {
-            CompanyEmpArray[this.noOfCompanies++] = new CompanyEmpWage(comp, wagePerHour, workingDaysPerMonth, maxWorkingHours);
+            CompanyEmpWage cew = new CompanyEmpWage(comp, wagePerHour, workingDaysPerMonth, maxWorkingHours);
+            this.CompanyEmpList.Add(cew);
         }
 
         //method for compute wage
         public void ComputeEmpWage()
         {
-            for (int i = 0; i < noOfCompanies; i++)
+            foreach (CompanyEmpWage i in this.CompanyEmpList)
             {
-                CompanyEmpArray[i].SetWagesForMonth(this.CalculateEmpWage(this.CompanyEmpArray[i]));
-                Console.WriteLine(this.CompanyEmpArray[i].toString());
+                i.SetWagesForMonth(this.CalculateEmpWage(i));
+                Console.WriteLine(i.toString());
             }
+
         }
         private int CalculateEmpWage(CompanyEmpWage company)
         {
@@ -64,7 +69,7 @@ namespace empWage
             }
 
             return company.wagePerHour * totalWorkingHours;//formula for wages
-            //Console.WriteLine($"Total EmpWage For company {company} is {wagesForMonth}");
+ 
 
         }
 
