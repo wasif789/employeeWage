@@ -2,84 +2,95 @@
 
 namespace empWage
 {
-    class EmployeeWage
+    class Program
     {
-        //initialzing constants
+        //Declaring Constant Variable
         public const int FULL_TIME = 1;
-        public const int ABSENT = 0;
         public const int PART_TIME = 2;
-        //public const int WAGE_PER_HOUR = 20;
-        //public const int WORKING_DAYS_PER_MONTH = 20;
-        //public const int WORKING_HOURS_PER_MONTH = 100;
-        private string company;
-        private int wagePerHour;
-        private int workingDaysPerMonth;
-        private int maxWorkingHours;
-        private int wagesForMonth;
+        //  private static int maxHoursPerMonth;
+        //public string company;
+        //public  int WAGE_PER_HOUR;
+        //public  int maxHoursPerMonth;
+        //public  int max_working_days;
+        //public  int wage_per_hour;
 
-        public EmployeeWage(string comp, int wagePerHour, int workingDaysPerMonth, int maxWorkingHours)
+        //   public Program(string company, int wage_per_hour, int max_working_days, int maxHoursPerMonth)
+        // {
+        //   this.company = company;
+        // this.wage_per_hour = wage_per_hour;
+        //this.max_working_days = max_working_days;
+        //this.maxHoursPerMonth = maxHoursPerMonth;
+        //}
+        public class EmpBuilderWage
         {
-            this.company = comp;
-            this.wagePerHour = wagePerHour;
-            this.workingDaysPerMonth = workingDaysPerMonth;
-            this.maxWorkingHours = maxWorkingHours;
-        }
-        private void CalculateEmpWage()
-        {
-            int workingDays = 0;
+            public const int FULL_TIME = 1;
+            public const int PART_TIME = 2;
+            private int numOfCompany = 0;
+            private int empDailyWage = 0;
+            private CompanyEmpWage[] companyEmpWageArray;
+            private int totalWage;
+            private int wagePerHour;
 
-            int workingHours = 0;
-            int totalWorkingHours = 0;
-
-            Random rand = new Random(); // intializing random class
-            //for loop for calculating for 20 days
-            while (totalWorkingHours <= this.maxWorkingHours && workingDays < this.workingDaysPerMonth)
+            public EmpBuilderWage()
             {
-                int empInput = rand.Next(0, 3);//Generating random b/w 0 and 3
-                switch (empInput)
-                {
-                    case FULL_TIME:
-                        //Console.WriteLine("Employee is Present Full Time");
-                        workingHours = 8;
-                        break;
-                    case PART_TIME:
-                        //Console.WriteLine("Employee is Present Part Time");
-                        workingHours = 4;
-                        break;
-                    default:
-                        //Console.WriteLine("Employee is Absent");
-                        workingHours = 0;
-                        break;
-                }
-                totalWorkingHours += workingHours;
-                workingDays++;
-
+                this.companyEmpWageArray = new CompanyEmpWage[5];
             }
+            public void addCompanyEmpWage(string company, int wagePerhour, int maxHoursPerMonth, int maxWorkingDays)
+            {
+                companyEmpWageArray[this.numOfCompany] = new CompanyEmpWage(company, wagePerhour, maxHoursPerMonth, maxWorkingDays);
+                numOfCompany++;
+            }
+            public void ComputeEmpWage()
+            {
+                for (int i = 0; i < numOfCompany; i++)
+                {
+                    companyEmpWageArray[i].setTotalEmpWage(this.ComputeEmpWage(this.companyEmpWageArray[i]));
+                    Console.WriteLine(this.companyEmpWageArray[i].toString());
+                }
+            }
+            private int ComputeEmpWage(CompanyEmpWage companyEmpWage)
+            {
+                //Console.WriteLine("Welcome to employee wage computation");
+                //Creating a Random Function
+                int empHours = 0, totalEmpHrs = 0, totalWorkingDays = 0;
 
-            this.wagesForMonth = this.wagePerHour * totalWorkingHours;//formula for wages
-            //Console.WriteLine($"Total EmpWage For company {company} is {wagesForMonth}");
 
-        }
-        public string toString()
-        {
-            return $"Total EmpWage For company {this.company} is {this.wagesForMonth}";
-        }
+                while (totalEmpHrs <= companyEmpWage.maxHoursPerMonth && totalWorkingDays <= companyEmpWage.maxWorkingDays)
+                {
+                    //Calling the next method in Random Class
+                    totalWorkingDays++;
+                    Random r = new Random();
+                    int empAttendance = r.Next(0, 3);
+                    switch (empAttendance)
+                    {
+                        case FULL_TIME:
+                            empHours = 8;
+                            break;
+                        case PART_TIME:
+                            empHours = 4;
+                            break;
+                        default:
+                            empHours = 0;
+                            break;
 
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Welcome to Employee Wage Computation Problem");
-            //parameterized constructor for employee wage class to initialize tvs variables
-            EmployeeWage tvs = new EmployeeWage("Tvs", 50, 20, 100);
-            tvs.CalculateEmpWage();
-            Console.WriteLine(tvs.toString());
-            //parameterized constructor for employee wage class to initialize zoho variables
-            EmployeeWage zoho = new EmployeeWage("Zoho", 40, 20, 200);
-            zoho.CalculateEmpWage();
-            Console.WriteLine(zoho.toString());
+                    }
 
-            //CalculateEmpWage("Tvs",50,20,100);
-            //CalculateEmpWage("Zoho", 40, 20, 200);
+                    totalEmpHrs += empHours;
 
+
+                }
+
+                Console.WriteLine("Days : " + totalWorkingDays + " Emp Hours : " + totalEmpHrs);
+                return totalEmpHrs * companyEmpWage.wagePerHour;
+            }
+            static void Main(string[] args)
+            {
+                Console.WriteLine("Welcome to employee wage computation");
+                EmpBuilderWage empBuilderWage = new EmpBuilderWage();
+                empBuilderWage.addCompanyEmpWage("TvsNext", 20, 100, 23);
+                empBuilderWage.addCompanyEmpWage("wipro", 30, 120, 21);
+                empBuilderWage.ComputeEmpWage();
+            }
         }
     }
 }
