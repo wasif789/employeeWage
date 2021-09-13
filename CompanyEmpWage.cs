@@ -6,28 +6,29 @@ namespace empWage
 {
     class CompanyEmpWage
     {
+        //instance variables
         public string company;
         public int wagePerHour;
-        public int maxHoursPerMonth;
-        public int maxWorkingDays;
-        public int totalWage;
+        public int workingDaysPerMonth;
+        public int maxWorkingHours;
+        public int wagesForMonth;
 
-        public CompanyEmpWage(string company, int wagePerHour, int maxHoursPerMonth, int maxWorkingDays)
+        // parameterized constructor for this class
+        public CompanyEmpWage(string comp, int wagePerHour, int workingDaysPerMonth, int maxWorkingHours)
         {
-            this.company = company;
+            this.company = comp;
             this.wagePerHour = wagePerHour;
-            this.maxHoursPerMonth = maxHoursPerMonth;
-            this.maxWorkingDays = maxWorkingDays;
+            this.workingDaysPerMonth = workingDaysPerMonth;
+            this.maxWorkingHours = maxWorkingHours;
         }
-        public void setTotalEmpWage(int totalWage)
+
+        public void SetWagesForMonth(int swfm)
         {
-            this.totalWage = totalWage;
-
+            this.wagesForMonth = swfm;
         }
-
         public string toString()
         {
-            return "Total Employee Wage for Company  " + this.company + " is " + this.totalWage;
+            return $"Total EmpWage For company {this.company} is {this.wagesForMonth}";
         }
     }
 }
